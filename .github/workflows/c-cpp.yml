@@ -1,0 +1,23 @@
+name: C/C++ CI
+
+on:
+  pull_request:
+    tags: [ "1_20_2" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: defconfig
+      run: make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- defconfig
+    - name: menuconfig
+      run: make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- menuconfig
+    - name: build
+      run: make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- 
+    - name: install
+      run: make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- install CONFIG_PREFIX=/home/export/rootfs
+
+
